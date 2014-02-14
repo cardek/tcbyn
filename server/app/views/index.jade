@@ -5,24 +5,10 @@ head
   include includes/assets
 
 body
-  h1 Este.js App Boilerplate
-  p.
-    This is single page application boilerplate.
-  ul
-    li: a(href="/bower_components/este-library/este/demos/index.html").
-      Este demos
-    li: a(href="/bower_components/closure-library/closure/goog/demos/index.html").
-      Google Closure demos
-  p.
-    Simple TodoMVC component example:
-  #todo-mvc
-  p Where to start:
-  ul
-    li: code client/app/js/start.coffee
-    li: code client/app/css/app.styl
-    li: code server/app/*
-  p Happy Codding!
+  h1 This could be your neighbour
+  #tcbyn
+
   script.
-    app.start({"someDataFromServer": 123});
+    app.start({"selector": 'tcbyn', "baseUrl": "localhost:8000"});
   if env == 'development'
     script(src="http://localhost:35729/livereload.js")
