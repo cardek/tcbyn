@@ -5,6 +5,7 @@ goog.provide 'app.photos.Component'
 
 goog.require 'este.ui.Component'
 goog.require 'app.photos.react'
+goog.require 'goog.events.EventType'
 
 class app.photos.Component extends este.ui.Component
 
@@ -15,6 +16,9 @@ class app.photos.Component extends este.ui.Component
   ###
   constructor: (@storage) ->
     super()
+
+    # remove if slider is implemented
+    @user = 'gender': 'girls'
 
   ###*
     @type {Object}
@@ -48,13 +52,46 @@ class app.photos.Component extends este.ui.Component
   ###
   enterDocument: ->
     super()
+    @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
+    @on '.close', goog.events.EventType.CLICK, @onCloseClick
+    @on '.fake', goog.events.EventType.CLICK, @onFakeClick
+    @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
     return
+
+  ###*
+    @protected
+  ###
+  onWrongCategoryClick: (e) ->
+    @thanksForVote()
+
+  ###*
+    @protected
+  ###
+  onFakeClick: (e) ->
+    @thanksForVote()
+
+  ###*
+    @protected
+  ###
+  onDetailClick: (e) ->
+    @detail =
+      'networkClass': 'type-insta'
+      'src': '/client/app/img/02.jpg'
+    @update()
+
+  ###*
+    @protected
+  ###
+  onCloseClick: (e) ->
+    @detail = null
+    @update()
 
   ###*
     @protected
   ###
   update: ->
     props =
+      'detail': @detail
       'user': @user
       'photos': [
         'networkClass': 'type-vine'
@@ -78,3 +115,11 @@ class app.photos.Component extends este.ui.Component
       este.react.render @react, @getElement()
     else
       @react.setProps props
+
+  thanksForVote: ->
+    el = @dom_.getElement 'notification-container'
+    @dom_.setTextContent el, 'Thanks for your vote!'
+    goog.dom.classes.enable el, 'act', yes
+    setTimeout ->
+      goog.dom.classes.enable el, 'act', no
+    , 2000

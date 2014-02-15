@@ -12,15 +12,17 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @ul 'className': 'list', [
         @renderPhoto photo for photo in @props['photos']
       ]
+      @div 'className': 'overlay act' if @props['detail'] or not @props['user']
       @renderStart() unless @props['user']
+      @renderDetail @props['detail'] if @props['detail']
+      @i 'className': 'tooltip'
     ]
 
   renderPhoto: (photo) ->
     @li [
       @article [
         @a
-          'href': ''
-          'className': photo['networkClass']
+          'className': "detail-btn #{photo['networkClass']}"
         , [
           @span 'className': 'view', [
             @i 'VIEW'
@@ -29,13 +31,11 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         ]
         @div 'className': 'more', [
           @a
-            'href': ''
             'className': 'fake'
           , [
             @i ''
           ]
           @a
-            'href': ''
             'className': 'wrong-category'
           , [
             @i ''
@@ -45,7 +45,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderStart: ->
-    @div 'className': 'overlay'
     @div 'className': 'lightbox start-lightbox act', [
       @header [
         @h1 [
@@ -67,18 +66,80 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         ]
       ]
 
-      @div 'className': 'choose-switcher', [
-        @i 'className': 'arrow-left'
-        @i 'className': 'arrow-right'
+      @div 'className': 'select-gender', [
+        @h2 'I want to see'
+        @div 'className': 'choose-switcher', [
+          @i 'className': 'arrow-left'
+          @i 'className': 'arrow-right'
 
-        @a
-          'href': ''
-          'className': 'select-type-btn switcher-0'
-        , 'Boys'
-        @div 'className': 'switcher'
-        @a
-          'href': ''
-          'className': 'select-type-btn switcher-2'
-        , 'Girls'
+          @a
+            'className': 'select-type-btn switcher-0'
+          , 'Boys'
+          @div 'className': 'switcher'
+          @a
+            'className': 'select-type-btn switcher-2'
+          , 'Girls'
+        ]
       ]
+      @p 'className': 'copy', 'By selecting the gender you agree to our terms and conditions and you are confirming you are over 18 years old.'
+
+    ]
+
+  renderDetail: (photo) ->
+    @div 'className': 'lightbox detail-lightbox act', [
+      @a
+        'className': 'btn-listing prev'
+      @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
+        @a
+          'className': 'close'
+        , 'CLOSE'
+        @div 'className': 'img', [
+          @i 'className': 'border'
+          @img 'src': '/client/app/img/detail.jpg'
+        ]
+        @div 'className': 'desc', [
+          @a
+            'className': 'user'
+            '_target': 'blank'
+          , [
+            @i [
+              @img
+                'src': '/client/app/img/user.jpg'
+                'alt': ''
+            ]
+            @span 'christymack'
+          ]
+          @br
+          @h1 'Non filtered, non made up Mack. Nothing but my lash extensions.'
+          @p 'className': 'date', [
+            '10.11 pm 1/30/2014'
+            @br
+          ]
+          @div 'className': 'maps', [
+            @p [
+              'This hot babe is from'
+              @strong 'Las Vegas, TX'
+            ]
+          ]
+          @div 'className': 'other-social', [
+            @p 'Try her other social media profiles'
+            @ul
+              @li @a
+                'className': 'twitter'
+                'target': '_blank'
+              , 'Twitter'
+              @li @a
+                'className': 'insta'
+                'target': '_blank'
+              , 'Instagram'
+              @li @a
+                'className': 'vine'
+                'target': '_blank'
+              , 'Vine'
+          ]
+        ]
+        @i 'className': 'border'
+      ]
+      @a
+        'className': 'btn-listing prev'
     ]

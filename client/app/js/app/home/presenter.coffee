@@ -29,8 +29,11 @@ class app.home.Presenter extends este.app.Presenter
     @override
   ###
   load: (params) ->
-    @photos = new app.photos.Collection 418283667 #482357921
-    @storage.query @photos
+    @photos = new app.photos.Collection 418283667 #482357921 alcie #418283667 vix #agr 601244563
+    res =  @storage.query @photos
+    
+    goog.result.waitOnSuccess res, =>
+      console.log @photos
 
   ###*
     @override

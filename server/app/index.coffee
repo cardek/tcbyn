@@ -49,8 +49,6 @@ run = ->
       res.locals.appVersion = require('../../package.json').version
       next()
     
-    
-    
     if config.env.development
       app.use '/client', express.static 'client'
       app.use '/bower_components', express.static 'bower_components'
@@ -85,7 +83,7 @@ run = ->
   app.get "/api/user/:userId(\\d+)", (req, res, next) ->
     twitter.getTimeline "user",
       user_id: req.params.userId
-      count: 2
+      count: 50
     , accessToken, accessTokenSecret, (err, res2, body) ->
         return next err if err
         return next body.error if body and body.error
