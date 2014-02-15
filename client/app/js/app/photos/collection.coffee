@@ -56,15 +56,15 @@ class app.photos.Collection extends este.Collection
         for url in entity.urls
           if goog.string.contains url.expanded_url, "instagram.com"
             interesting = true
-            item.set 'network','instagram'
-            item.set 'media', url.expanded_url
+            item.set 'network','type-insta'
+            item.set 'media', url.expanded_url + 'media/'
           if goog.string.contains url.expanded_url, "pic.twitter"
             interesting = true
-            item.set 'network','twitter'
+            item.set 'network','type-twitter'
             item.set 'media', url.expanded_url
           if goog.string.contains url.expanded_url, "vine.co"
             interesting = true
-            item.set 'network','vine'
+            item.set 'network','type-vine'
             item.set 'media', url.expanded_url
       if interesting is true
         @ensureUnique item

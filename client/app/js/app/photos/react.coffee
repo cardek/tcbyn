@@ -9,9 +9,13 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
 
   render: ->
     @section [
+      console.log @props['photos']
       @ul 'className': 'list', [
-        @renderPhoto photo for photo in @props['photos']
+        @renderPhoto photo for photo in @props['photos'].toArray()
       ]
+      if @props['isLoading']
+        @div 'className': 'loading', @img
+          'src': '/client/app/img/loading.gif'
       @div 'className': 'overlay act' if @props['detail'] or not @props['user']
       @renderStart() unless @props['user']
       @renderDetail @props['detail'] if @props['detail']
@@ -22,12 +26,12 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     @li [
       @article [
         @a
-          'className': "detail-btn #{photo['networkClass']}"
+          'className': "detail-btn #{photo.get 'network'}"
         , [
           @span 'className': 'view', [
             @i 'VIEW'
           ]
-          @img 'src': photo['src']
+          @img 'src': photo.get 'media'
         ]
         @div 'className': 'more', [
           @a
@@ -123,7 +127,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           ]
           @div 'className': 'other-social', [
             @p 'Try her other social media profiles'
-            @ul
+            @ul [
               @li @a
                 'className': 'twitter'
                 'target': '_blank'
@@ -136,10 +140,11 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
                 'className': 'vine'
                 'target': '_blank'
               , 'Vine'
+            ]
           ]
         ]
         @i 'className': 'border'
       ]
       @a
-        'className': 'btn-listing prev'
+        'className': 'btn-listing next'
     ]
