@@ -12,8 +12,9 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @ul 'className': 'list', [
         @renderPhoto photo for photo in @props['photos']
       ]
-      @renderStart() if @props['user']
-      @renderDetail @props['photos'][1] unless @props['detail']
+      @div 'className': 'overlay act' if @props['detail'] or not @props['user']
+      @renderStart() unless @props['user']
+      @renderDetail @props['detail'] if @props['detail']
       @i 'className': 'tooltip'
     ]
 
@@ -21,8 +22,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     @li [
       @article [
         @a
-          'href': ''
-          'className': photo['networkClass']
+          'className': "detail-btn #{photo['networkClass']}"
         , [
           @span 'className': 'view', [
             @i 'VIEW'
@@ -31,13 +31,11 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         ]
         @div 'className': 'more', [
           @a
-            'href': ''
             'className': 'fake'
           , [
             @i ''
           ]
           @a
-            'href': ''
             'className': 'wrong-category'
           , [
             @i ''
@@ -47,7 +45,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderStart: ->
-    @div 'className': 'overlay'
     @div 'className': 'lightbox start-lightbox act', [
       @header [
         @h1 [
@@ -76,12 +73,10 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           @i 'className': 'arrow-right'
 
           @a
-            'href': ''
             'className': 'select-type-btn switcher-0'
           , 'Boys'
           @div 'className': 'switcher'
           @a
-            'href': ''
             'className': 'select-type-btn switcher-2'
           , 'Girls'
         ]
@@ -93,11 +88,9 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
   renderDetail: (photo) ->
     @div 'className': 'lightbox detail-lightbox act', [
       @a
-        'href': ''
         'className': 'btn-listing prev'
       @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
         @a
-          'href': ''
           'className': 'close'
         , 'CLOSE'
         @div 'className': 'img', [
@@ -106,7 +99,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         ]
         @div 'className': 'desc', [
           @a
-            'href': ''
             'className': 'user'
             '_target': 'blank'
           , [
@@ -126,7 +118,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           @div 'className': 'maps', [
             @p [
               'This hot babe is from'
-              @br
               @strong 'Las Vegas, TX'
             ]
           ]
@@ -134,17 +125,14 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
             @p 'Try her other social media profiles'
             @ul
               @li @a
-                'href': ''
                 'className': 'twitter'
                 'target': '_blank'
               , 'Twitter'
               @li @a
-                'href': ''
                 'className': 'insta'
                 'target': '_blank'
               , 'Instagram'
               @li @a
-                'href': ''
                 'className': 'vine'
                 'target': '_blank'
               , 'Vine'
@@ -153,6 +141,5 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         @i 'className': 'border'
       ]
       @a
-        'href': ''
         'className': 'btn-listing prev'
     ]

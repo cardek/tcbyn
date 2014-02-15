@@ -5,6 +5,7 @@ goog.provide 'app.photos.Component'
 
 goog.require 'este.ui.Component'
 goog.require 'app.photos.react'
+goog.require 'goog.events.EventType'
 
 class app.photos.Component extends este.ui.Component
 
@@ -15,6 +16,9 @@ class app.photos.Component extends este.ui.Component
   ###
   constructor: (@storage) ->
     super()
+
+    # remove if slider is implemented
+    @user = 'gender': 'girls'
 
   ###*
     @type {Object}
@@ -48,13 +52,32 @@ class app.photos.Component extends este.ui.Component
   ###
   enterDocument: ->
     super()
+    @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
+    @on '.close', goog.events.EventType.CLICK, @onCloseClick
     return
+
+  ###*
+    @protected
+  ###
+  onDetailClick: (e) ->
+    @detail =
+      'networkClass': 'type-insta'
+      'src': '/client/app/img/02.jpg'
+    @update()
+
+  ###*
+    @protected
+  ###
+  onCloseClick: (e) ->
+    @detail = null
+    @update()
 
   ###*
     @protected
   ###
   update: ->
     props =
+      'detail': @detail
       'user': @user
       'photos': [
         'networkClass': 'type-vine'
