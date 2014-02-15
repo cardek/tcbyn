@@ -7,6 +7,7 @@ goog.require 'este.ui.Component'
 goog.require 'app.photos.react'
 goog.require 'goog.events.EventType'
 goog.require 'sms.events.InfinitePageScrollHandler'
+goog.require 'goog.events.KeyCodes'
 
 class app.photos.Component extends este.ui.Component
 
@@ -94,6 +95,7 @@ class app.photos.Component extends este.ui.Component
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
     @on '.switcher-0', goog.events.EventType.CLICK, @onBoysClick
     @on '.switcher-2', goog.events.EventType.CLICK, @onGirlsClick
+    @on @, goog.events.KeyCodes.ENTER, @onEscClick
 
     @scrollHandler.setEnabled on
     return
@@ -158,6 +160,14 @@ class app.photos.Component extends este.ui.Component
   onCloseClick: (e) ->
     @detail = null
     @update()
+
+  ###*
+    @protected
+  ###
+  onEscClick: (e) ->
+    console.log e
+    return unless @detail
+    @onCloseClick()
 
   ###*
     @protected
