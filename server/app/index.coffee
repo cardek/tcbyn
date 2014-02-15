@@ -54,17 +54,7 @@ run = ->
   accessTokenSecret = "6kjpkMK9QB6a4lZTq9Hze0FEGIiM7RH3eU4t9EOA38L7c"  
 
   app.get '/', routes.index
-  
-#  app.get "#{apiPrefixUrl}/accounts", (req, res, next) ->
-#    type = req.query.searchType or 'name'
-#    if req.query.searchType and req.query.searchType isnt 'name' and not req.query.searchPhrase
-#      type = 'name'
-#    filter =
-#      type: type
-#      query: req.query.searchPhrase or ''
-#      offset: req.query.offset or 0
-#    model.getAccounts filter, op.cb res, next
-   
+
   app.get "/api/statuses/user_timeline", (req, res, next) ->
     twitter.statuses "user_timeline",
       screen_name: req.query.screen_name

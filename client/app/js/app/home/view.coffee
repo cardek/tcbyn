@@ -5,6 +5,7 @@ goog.provide 'app.home.View'
 
 goog.require 'app.home.react'
 goog.require 'este.app.View'
+goog.require 'app.photos.Component'
 
 class app.home.View extends este.app.View
 
@@ -28,9 +29,8 @@ class app.home.View extends este.app.View
     super()
     @update()
 
-    @photos = app.photos.Component @storage
-    @addChild @photos
-    @photos.render @dom_.getElementByClass 'photos-container', @getElement()
+    @photos = new app.photos.Component @storage
+    @addChild @photos, yes
     return
 
   ###*
