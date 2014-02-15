@@ -55,10 +55,10 @@ run = ->
 
   app.get '/', routes.index
 
-  app.get "/api/statuses/user_timeline", (req, res, next) ->
-    twitter.statuses "user_timeline",
-      screen_name: req.query.screen_name
-      count: req.query.count
+  app.get "/api/user/timeline/:userId(\\d+)", (req, res, next) ->
+    twitter.getTimeline "user_timeline",
+      user_id: req.params.userId
+      count: 10
     , accessToken, accessTokenSecret, (err, res, body) ->
         return next body.error if body and body.error
         data = if Array.isArray body?.data then body.data else []
