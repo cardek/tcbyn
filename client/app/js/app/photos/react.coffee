@@ -14,7 +14,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       ]
       if @props['isLoading']
         @div 'className': 'loading', @img
-          'src': '/client/app/img/loading.gif'
+          'src': "/client/app/img/loading-anim-#{if @props['user']?['gender'] is 'girls' then 'female' else 'male'}.gif"
       @div 'className': 'overlay act' if @props['detail'] or not @props['user']
       @renderStart() unless @props['user']
       @renderDetail @props['detail'] if @props['detail']

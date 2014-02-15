@@ -18,8 +18,6 @@ class app.photos.Component extends este.ui.Component
   constructor: (@storage) ->
     super()
 
-    # remove if slider is implemented
-    @user = 'gender': 'girls'
     @photos = [
       'networkClass': 'type-vine'
       'src': '/client/app/img/01.jpg'
@@ -94,9 +92,25 @@ class app.photos.Component extends este.ui.Component
     @on '.close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
+    @on '.switcher-0', goog.events.EventType.CLICK, @onBoysClick
+    @on '.switcher-2', goog.events.EventType.CLICK, @onGirlsClick
 
     @scrollHandler.setEnabled on
     return
+
+  ###*
+    @protected
+  ###
+  onBoysClick: ->
+    @user = 'gender': 'boys'
+    @update()
+
+  ###*
+    @protected
+  ###
+  onGirlsClick: ->
+    @user = 'gender': 'girls'
+    @update()
 
   ###*
     @override
