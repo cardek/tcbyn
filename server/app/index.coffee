@@ -3,6 +3,7 @@ express = require 'express'
 http = require 'http'
 path = require 'path'
 routes = require './routes'
+twitter = require './lib/twitterApiRequest'
 
 run = ->
   app = express()
@@ -48,8 +49,30 @@ run = ->
         res.render '500',
           title: '500: Internal Server Error'
           error: error
+        
+  accessToken = "594940003-rHXwOwO52n5NHWFcXH4vWtNG08bbY8dKHf3NOnBK"
+  accessTokenSecret = "6kjpkMK9QB6a4lZTq9Hze0FEGIiM7RH3eU4t9EOA38L7c"  
 
   app.get '/', routes.index
+  
+#  app.get "#{apiPrefixUrl}/accounts", (req, res, next) ->
+#    type = req.query.searchType or 'name'
+#    if req.query.searchType and req.query.searchType isnt 'name' and not req.query.searchPhrase
+#      type = 'name'
+#    filter =
+#      type: type
+#      query: req.query.searchPhrase or ''
+#      offset: req.query.offset or 0
+#    model.getAccounts filter, op.cb res, next
+   
+  app.get "/api/statuses/user_timeline", (req, res, next) ->
+    twitter.statuses "user_timeline",
+      screen_name: req.query.screen_name
+      count: req.query.count
+    , accessToken, accessTokenSecret, (err, res, body) ->
+        return next body.error if body and body.error
+        data = if Array.isArray body?.data then body.data else []
+        next err, data
 
   http.createServer(app).listen config.server.port, ->
     console.log "Express server listening on port #{config.server.port}"
