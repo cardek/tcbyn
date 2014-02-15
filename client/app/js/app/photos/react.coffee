@@ -12,7 +12,8 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @ul 'className': 'list', [
         @renderPhoto photo for photo in @props['photos']
       ]
-      @renderStart() unless @props['user']
+      @renderStart() if @props['user']
+      @renderDetail @props['photos'][1]
     ]
 
   renderPhoto: (photo) ->
@@ -80,5 +81,38 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           'href': ''
           'className': 'select-type-btn switcher-2'
         , 'Girls'
+      ]
+    ]
+
+  renderDetail: (photo) ->
+    @div 'className': 'lightbox detail-lightbox act', [
+      @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
+        @a
+          'href': ''
+          'className': 'close'
+        , 'CLOSE'
+        @div 'className': 'img', [
+          @img 'src': '/client/app/img/detail.jpg'
+        ]
+        @div 'className': 'desc', [
+          @a
+            'href': ''
+            'className': 'user'
+          , [
+            @i [
+              @img
+                'src': '/client/app/img/user.jpg'
+                'alt': ''
+            ]
+            @span 'christymack'
+          ]
+          @br
+          @h1 'Non filtered, non made up Mack. Nothing but my lash extensions.'
+          @p 'className': 'date', [
+            '10.11 pm 1/30/2014'
+            @br
+          ]
+        ]
+        @i 'className': 'border'
       ]
     ]
