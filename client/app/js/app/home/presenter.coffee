@@ -5,7 +5,7 @@ goog.provide 'app.home.Presenter'
 
 goog.require 'este.app.Presenter'
 goog.require 'app.home.View'
-goog.require 'app.accounts.Model'
+goog.require 'app.photos.Collection'
 
 class app.home.Presenter extends este.app.Presenter
 
@@ -19,18 +19,18 @@ class app.home.Presenter extends este.app.Presenter
 
   ###*
     Model of one twitter account.
-    @type {app.accounts.Model}
+    @type {app.photos.Collection}
     @protected
   ###
-  account: null
+  photos: null
 
   ###*
     Load data for view.
     @override
   ###
   load: (params) ->
-    @account = new app.accounts.Model 418283667
-    @storage.load @account
+    @photos = new app.photos.Collection 418283667 #482357921
+    @storage.query @photos
 
   ###*
     @override
