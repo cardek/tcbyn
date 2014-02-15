@@ -12,6 +12,9 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @ul 'className': 'list', [
         @renderPhoto photo for photo in @props['photos']
       ]
+      if @props['isLoading']
+        @div 'className': 'loading', @img
+          'src': '/client/app/img/loading.gif'
       @div 'className': 'overlay act' if @props['detail'] or not @props['user']
       @renderStart() unless @props['user']
       @renderDetail @props['detail'] if @props['detail']

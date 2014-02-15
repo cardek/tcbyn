@@ -26,6 +26,7 @@ module.exports = (grunt) ->
           expand: true
           src: [
             'bower_components/este-library/este/**/*.styl'
+            'bower_components/sms-library/sms/**/*.styl'
             'client/app/css/**/*.styl'
           ]
           ext: '.css'
@@ -45,6 +46,7 @@ module.exports = (grunt) ->
           expand: true
           src: [
             'bower_components/este-library/este/**/*.coffee'
+            'bower_components/sms-library/sms/**/*.coffee'
             'client/app/js/**/*.coffee'
             'server/**/*.coffee'
           ]
@@ -71,6 +73,7 @@ module.exports = (grunt) ->
             'bower_components/closure-library'
             'bower_components/closure-templates'
             'bower_components/este-library/este'
+            'bower_components/sms-library/sms'
             'client/app/js'
           ]
 
