@@ -9,7 +9,6 @@ goog.require 'app.home.Presenter'
 goog.require 'este.storage.Rest'
 
 app.start = (settings) ->
-  console.log 'sss', settings
   tcbynApp = este.app.create settings['selector'], forceHash: true
   tcbynApp.storage = new este.storage.Rest "#{settings['baseUrl']}/api"
   tcbynApp.addRoutes
