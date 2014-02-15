@@ -54,7 +54,21 @@ class app.photos.Component extends este.ui.Component
     super()
     @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
     @on '.close', goog.events.EventType.CLICK, @onCloseClick
+    @on '.fake', goog.events.EventType.CLICK, @onFakeClick
+    @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
     return
+
+  ###*
+    @protected
+  ###
+  onWrongCategoryClick: (e) ->
+    @thanksForVote()
+
+  ###*
+    @protected
+  ###
+  onFakeClick: (e) ->
+    @thanksForVote()
 
   ###*
     @protected
@@ -101,3 +115,11 @@ class app.photos.Component extends este.ui.Component
       este.react.render @react, @getElement()
     else
       @react.setProps props
+
+  thanksForVote: ->
+    el = @dom_.getElement 'notification-container'
+    @dom_.setTextContent el, 'Thanks for your vote!'
+    goog.dom.classes.enable el, 'act', yes
+    setTimeout ->
+      goog.dom.classes.enable el, 'act', no
+    , 2000
