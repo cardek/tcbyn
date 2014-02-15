@@ -126,7 +126,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           ]
           @div 'className': 'other-social', [
             @p 'Try her other social media profiles'
-            @ul
+            @ul [
               @li @a
                 'className': 'twitter'
                 'target': '_blank'
@@ -139,10 +139,11 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
                 'className': 'vine'
                 'target': '_blank'
               , 'Vine'
+            ]
           ]
         ]
         @i 'className': 'border'
       ]
       @a
-        'className': 'btn-listing prev'
+        'className': 'btn-listing next'
     ]
