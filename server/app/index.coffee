@@ -8,6 +8,8 @@ run = ->
   app = express()
   app.configure ->
     app.locals.env = config.currentEnv
+    #app.locals.baseUrl = stringUtils.rtrim process.config.baseUrl, '\/'
+    app.locals.baseUrl = '/'
 
     app.set 'title', 'github.com/steida/este'
     app.set 'views', __dirname + '/views'

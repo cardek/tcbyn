@@ -1,0 +1,32 @@
+mixin nav-link(href, label, ac)
+  li
+    a(href=href)
+      if ac
+        strong
+          =__(label)
+      else
+        =__(label)
+
+doctype html
+html.no-js(lang='cs')
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, minimum-scale=1, maximum-scale=1")
+    meta(name="X-UA-Compatible", content="IE=edge,chrome1")
+    title this could be your neighbour!
+    include includes/assets
+
+    link(rel="shortcut icon", href="#{baseUrl}/client/app/img/ico/favicon.ico")
+    //if lte IE 8
+      script(src="js/libs/respond.min.js")
+
+  body
+    .dialog-container
+    header
+      h1
+        a(href='/') this could be your neighbor!
+
+    block content
+
+    if env == 'local'
+      script(src="http://localhost:35729/livereload.js")
