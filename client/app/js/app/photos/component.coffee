@@ -126,6 +126,17 @@ class app.photos.Component extends este.ui.Component
       'networkClass': 'type-insta'
       'src': '/client/app/img/02.jpg'
     @update()
+    @detailPicResize()
+
+  detailPicResize: ->
+    lightbox = @dom_.getElementByClass 'in-detail-lightbox', @getElement()
+    img = @dom_.getElementByClass 'img', lightbox
+    desc = @dom_.getElementByClass 'desc', lightbox
+
+    size = goog.style.getSize lightbox
+    goog.style.setStyle img, 'width', size.width + 'px'
+    w = size.width - (size.height + 30)
+    goog.style.setStyle desc, 'width', w + 'px'
 
   ###*
     @protected
