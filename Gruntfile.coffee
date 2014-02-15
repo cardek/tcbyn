@@ -10,8 +10,10 @@ module.exports = (grunt) ->
           force: true
         src: [
           'bower_components/este-library/este/**/*.{js,css}'
+          'bower_components/sms-library/sms/**/*.{js,css}'
           'client/**/build/**.*'
           'client/**/{js,css}/**/*.{js,css}'
+          '!client/**/{js,css}/externs/**'
           'server/**/*.js'
         ]
 

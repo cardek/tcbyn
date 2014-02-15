@@ -27,6 +27,10 @@ class app.home.View extends este.app.View
   createDom: ->
     super()
     @update()
+
+    @photos = app.photos.Component @storage
+    @addChild @photos
+    @photos.render @dom_.getElementByClass 'photos-container', @getElement()
     return
 
   ###*
