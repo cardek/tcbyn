@@ -13,7 +13,8 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         @renderPhoto photo for photo in @props['photos']
       ]
       @renderStart() if @props['user']
-      @renderDetail @props['photos'][1]
+      @renderDetail @props['photos'][1] unless @props['detail']
+      @i 'className': 'tooltip'
     ]
 
   renderPhoto: (photo) ->
@@ -68,36 +69,46 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         ]
       ]
 
-      @div 'className': 'choose-switcher', [
-        @i 'className': 'arrow-left'
-        @i 'className': 'arrow-right'
+      @div 'className': 'select-gender', [
+        @h2 'I want to see'
+        @div 'className': 'choose-switcher', [
+          @i 'className': 'arrow-left'
+          @i 'className': 'arrow-right'
 
-        @a
-          'href': ''
-          'className': 'select-type-btn switcher-0'
-        , 'Boys'
-        @div 'className': 'switcher'
-        @a
-          'href': ''
-          'className': 'select-type-btn switcher-2'
-        , 'Girls'
+          @a
+            'href': ''
+            'className': 'select-type-btn switcher-0'
+          , 'Boys'
+          @div 'className': 'switcher'
+          @a
+            'href': ''
+            'className': 'select-type-btn switcher-2'
+          , 'Girls'
+        ]
       ]
+      @p 'className': 'copy', 'By selecting the gender you agree to our terms and conditions and you are confirming you are over 18 years old.'
+
     ]
 
   renderDetail: (photo) ->
     @div 'className': 'lightbox detail-lightbox act', [
+      @a
+        'href': ''
+        'className': 'btn-listing prev'
       @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
         @a
           'href': ''
           'className': 'close'
         , 'CLOSE'
         @div 'className': 'img', [
+          @i 'className': 'border'
           @img 'src': '/client/app/img/detail.jpg'
         ]
         @div 'className': 'desc', [
           @a
             'href': ''
             'className': 'user'
+            '_target': 'blank'
           , [
             @i [
               @img
@@ -112,7 +123,36 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
             '10.11 pm 1/30/2014'
             @br
           ]
+          @div 'className': 'maps', [
+            @p [
+              'This hot babe is from'
+              @br
+              @strong 'Las Vegas, TX'
+            ]
+          ]
+          @div 'className': 'other-social', [
+            @p 'Try her other social media profiles'
+            @ul
+              @li @a
+                'href': ''
+                'className': 'twitter'
+                'target': '_blank'
+              , 'Twitter'
+              @li @a
+                'href': ''
+                'className': 'insta'
+                'target': '_blank'
+              , 'Instagram'
+              @li @a
+                'href': ''
+                'className': 'vine'
+                'target': '_blank'
+              , 'Vine'
+          ]
         ]
         @i 'className': 'border'
       ]
+      @a
+        'href': ''
+        'className': 'btn-listing prev'
     ]
