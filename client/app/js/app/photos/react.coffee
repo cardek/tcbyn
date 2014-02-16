@@ -196,6 +196,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
         @a
           'className': 'close'
+          'id': 'detail-close'
         , 'CLOSE'
         @div 'className': 'img', [
           @i 'className': 'border'

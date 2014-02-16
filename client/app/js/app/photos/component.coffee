@@ -93,7 +93,7 @@ class app.photos.Component extends este.ui.Component
   enterDocument: ->
     super()
     @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
-    @on '.close', goog.events.EventType.CLICK, @onCloseClick
+    @on '#detail-close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
     @on '.start-switcher-0', goog.events.EventType.CLICK, @onBoysClick
@@ -239,7 +239,6 @@ class app.photos.Component extends este.ui.Component
     @protected
   ###
   onEscClick: (e) ->
-    console.log e
     return unless @detail
     @onCloseClick()
 
