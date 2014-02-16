@@ -42,8 +42,21 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
             , 'I’d like to watch:'
             @div 'className': 'in-item switcher-item', [
               @a 'className': 'select-type-btn-filter switcher-0 filter-switcher-0', @span 'Boys'
-              @div 'className': 'switcher-filter'
-              @a 'className': 'select-type-btn-filter switcher-2 filter-switcher-1', @span 'Girls'
+              if @props['user']
+                @div
+                  'id': 'filter-gender-switcher'
+                  'className': "switcher-filter #{if @props['user']['gender'] is 'girls' then 'go-right' else 'go-left'}"
+                , [
+                  @div 'className': 'noUi-handle'
+                ]
+              else
+                @div
+                  'id': 'filter-gender-switcher'
+                  'className': "switcher-filter"
+                , [
+                  @div 'className': 'noUi-handle'
+                ]
+              @a 'className': 'select-type-btn-filter switcher-2 filter-switcher-2', @span 'Girls'
             ]
           ]
           @div 'className': 'item', [
@@ -54,8 +67,9 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
             @div 'className': 'in-item', [
               @label
                 'for': 'checkbox-photos'
-                'className': 'checkbox'
+                'className': "checkbox #{if @props['filter']['photos'] then 'active' else ''}"
               , [
+                @span 'className': 'like-checkbox'
                 @input
                   'className': 'checkbox-photos'
                   'type': 'checkbox'
@@ -67,8 +81,9 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
               ]
               @label
                 'for': 'checkbox-videos'
-                'className': 'checkbox'
+                'className': "checkbox #{if @props['filter']['videos'] then 'active' else ''}"
               , [
+                @span 'className': 'like-checkbox'
                 @input
                   'className': 'checkbox-videos'
                   'type': 'checkbox'
@@ -157,11 +172,16 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
           @i 'className': 'arrow-right'
 
           @a
-            'className': 'select-type-btn switcher-0'
+            'className': 'select-type-btn switcher-0 start-switcher-0'
           , 'Boys'
-          @div 'className': 'switcher'
+          @div
+            'className': "switcher"
+            'id': 'start-gender-switcher'
+          , [
+            @div 'className': 'noUi-handle'
+          ]
           @a
-            'className': 'select-type-btn switcher-2'
+            'className': 'select-type-btn switcher-2 start-switcher-2'
           , 'Girls'
         ]
       ]

@@ -96,8 +96,8 @@ class app.photos.Component extends este.ui.Component
     @on '.close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
-    @on '.switcher-0', goog.events.EventType.CLICK, @onBoysClick
-    @on '.switcher-2', goog.events.EventType.CLICK, @onGirlsClick
+    @on '.start-switcher-0', goog.events.EventType.CLICK, @onBoysClick
+    @on '.start-switcher-2', goog.events.EventType.CLICK, @onGirlsClick
     @on '.btn-filter', goog.events.EventType.CLICK, @onBtnFilterClick
     @on 'button', goog.events.EventType.CLICK, @onFilterSubmit
     @on '.checkbox-photos', goog.events.EventType.CLICK, @onCheckboxPhotosClick
@@ -116,12 +116,18 @@ class app.photos.Component extends este.ui.Component
   ###
   onFilterBoysClick: ->
     @user['gender'] = 'boys'
+    switcher = @dom_.getElement 'filter-gender-switcher'
+    goog.dom.classes.enable switcher, 'go-right', no
+    goog.dom.classes.enable switcher, 'go-left', yes
 
   ###*
     @protected
   ###
-  onFilterBoysClick: ->
+  onFilterGirlsClick: ->
     @user['gender'] = 'girls'
+    switcher = @dom_.getElement 'filter-gender-switcher'
+    goog.dom.classes.enable switcher, 'go-left', no
+    goog.dom.classes.enable switcher, 'go-right', yes
 
   ###*
     @protected
@@ -163,14 +169,24 @@ class app.photos.Component extends este.ui.Component
   ###
   onBoysClick: ->
     @user = 'gender': 'boys'
-    @update()
+    switcher = @dom_.getElement 'start-gender-switcher'
+    goog.dom.classes.enable switcher, 'go-right', no
+    goog.dom.classes.enable switcher, 'go-left', yes
+    setTimeout =>
+      @update()
+    , 200
 
   ###*
     @protected
   ###
   onGirlsClick: ->
     @user = 'gender': 'girls'
-    @update()
+    switcher = @dom_.getElement 'start-gender-switcher'
+    goog.dom.classes.enable switcher, 'go-left', no
+    goog.dom.classes.enable switcher, 'go-right', yes
+    setTimeout =>
+      @update()
+    , 200
 
   ###*
     @override
