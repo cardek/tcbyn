@@ -7,6 +7,7 @@ goog.require 'este.ui.Component'
 goog.require 'app.photos.react'
 goog.require 'goog.events.EventType'
 goog.require 'sms.events.InfinitePageScrollHandler'
+goog.require 'goog.events.KeyCodes'
 
 goog.require 'app.photos.Collection'
 
@@ -21,9 +22,9 @@ class app.photos.Component extends este.ui.Component
     super()
     
     @photos = new app.photos.Collection 20913964 #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack #18661601
-    
-    # remove if slider is implemented
-    @user = 'gender': 'girls'
+    @filter =
+      'videos': yes
+      'photos': yes
 
   ###*
     @type {Object}
@@ -66,13 +67,83 @@ class app.photos.Component extends este.ui.Component
     @on '.close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
-    
     @on @photos, este.Model.EventType.UPDATE, @onCollectionUpdate
-    
+    @on '.switcher-0', goog.events.EventType.CLICK, @onBoysClick
+    @on '.switcher-2', goog.events.EventType.CLICK, @onGirlsClick
+    @on '.btn-filter', goog.events.EventType.CLICK, @onBtnFilterClick
+    @on 'button', goog.events.EventType.CLICK, @onFilterSubmit
+    @on '.checkbox-photos', goog.events.EventType.CLICK, @onCheckboxPhotosClick
+    @on '.checkbox-videos', goog.events.EventType.CLICK, @onCheckboxVideosClick
+    @on '#filter-close', goog.events.EventType.CLICK, @onFilterCloseClick
+    @on '.filter-switcher-0', goog.events.EventType.CLICK, @onFilterBoysClick
+    @on '.filter-switcher-2', goog.events.EventType.CLICK, @onFilterGirlsClick
+
+    @on @, goog.events.KeyCodes.ENTER, @onEscClick
+
     @scrollHandler.setEnabled on
     return
 
   ###*
+    @protected
+  ###
+  onFilterBoysClick: ->
+    @user['gender'] = 'boys'
+
+  ###*
+    @protected
+  ###
+  onFilterBoysClick: ->
+    @user['gender'] = 'girls'
+
+  ###*
+    @protected
+  ###
+  onFilterCloseClick: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.enable filter, 'act', no
+
+  ###*
+    @protected
+  ###
+  onCheckboxPhotosClick: ->
+    @filter['photos'] = not @filter['photos']
+    @update()
+
+  ###*
+    @protected
+  ###
+  onCheckboxVideosClick: ->
+    @filter['videos'] = not @filter['videos']
+    @update()
+
+  ###*
+    @protected
+  ###
+  onFilterSubmit: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.enable filter, 'act', no
+
+  ###*
+    @protected
+  ###
+  onBtnFilterClick: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.toggle filter, 'act'
+
+  ###*
+    @protected
+  ###
+  onBoysClick: ->
+    @user = 'gender': 'boys'
+    @update()
+
+  ###*
+    @protected
+  ###
+  onGirlsClick: ->
+    @user = 'gender': 'girls'
+    
+  ###
     On collection update callback function
     @protected
   ###
@@ -127,8 +198,17 @@ class app.photos.Component extends este.ui.Component
   ###*
     @protected
   ###
+  onEscClick: (e) ->
+    console.log e
+    return unless @detail
+    @onCloseClick()
+
+  ###*
+    @protected
+  ###
   update: ->
     props =
+      'filter': @filter
       'isLoading': @isLoading
       'detail': @detail
       'user': @user

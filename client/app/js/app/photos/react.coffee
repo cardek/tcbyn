@@ -8,17 +8,98 @@ goog.require 'este.react'
 app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototype} */`)
 
   render: ->
-    @section [
-      @ul 'className': 'list', [
-        @renderPhoto photo for photo in @props['photos'].toArray()
+    @div [
+      @renderHeader()
+      @section [
+        @ul 'className': 'list', [
+          @renderPhoto photo for photo in @props['photos']
+        ]
+        if @props['isLoading']
+          @div 'className': 'loading', @img
+            'src': "/client/app/img/loading-anim-#{if @props['user']?['gender'] is 'girls' then 'female' else 'male'}.gif"
+        @div 'className': 'overlay act' if @props['detail'] or not @props['user']
+        @renderStart() unless @props['user']
+        @renderDetail @props['detail'] if @props['detail']
+        @i 'className': 'tooltip'
       ]
-      if @props['isLoading']
-        @div 'className': 'loading', @img
-          'src': '/client/app/img/loading.gif'
-      @div 'className': 'overlay act' if @props['detail'] or not @props['user']
-      @renderStart() unless @props['user']
-      @renderDetail @props['detail'] if @props['detail']
-      @i 'className': 'tooltip'
+    ]
+
+  renderHeader: ->
+    [
+      @header @h1 [
+        'this could be your neighbor!'
+        @a 'className': 'btn-filter', 'filter'
+      ]
+      @div 'className': 'filter', [
+        @div 'className': 'in-filter', [
+          @a
+            'className': 'close'
+            'id': 'filter-close'
+          @div 'className': 'item', [
+            @label
+              'for': ''
+              'className': 'text'
+            , 'I’d like to watch:'
+            @div 'className': 'in-item switcher-item', [
+              @a 'className': 'select-type-btn-filter switcher-0 filter-switcher-0', @span 'Boys'
+              @div 'className': 'switcher-filter'
+              @a 'className': 'select-type-btn-filter switcher-2 filter-switcher-1', @span 'Girls'
+            ]
+          ]
+          @div 'className': 'item', [
+            @label
+              'for': ''
+              'className': 'text'
+            , 'Show me:'
+            @div 'className': 'in-item', [
+              @label
+                'for': 'checkbox-photos'
+                'className': 'checkbox'
+              , [
+                @input
+                  'className': 'checkbox-photos'
+                  'type': 'checkbox'
+                  'name': 'checkbox-photos'
+                  'id': 'checkbox-photos'
+                  'value': 'Photos'
+                  'checked': @props['filter']['photos']
+                ' Photos'
+              ]
+              @label
+                'for': 'checkbox-videos'
+                'className': 'checkbox'
+              , [
+                @input
+                  'className': 'checkbox-videos'
+                  'type': 'checkbox'
+                  'name': 'checkbox-videos'
+                  'id': 'checkbox-videos'
+                  'value': 'Videos'
+                  'checked': @props['filter']['videos']
+                ' Videos'
+              ]
+            ]
+          ]
+          @div 'className': 'item', [
+            @label
+              'for': ''
+              'className': 'text'
+            , 'Within location:'
+            @div 'className': 'in-item', [
+              @input
+                'type': 'text'
+                'name': 'within-location'
+                'id': 'within-location'
+                'className': 'location'
+            ]
+          ]
+          @div 'className': 'item', [
+            @div 'className': 'in-item filter-item', [
+              @button 'type': 'submit', 'Filter'
+            ]
+          ]
+        ]
+      ]
     ]
 
   renderPhoto: (photo) ->
