@@ -83,7 +83,7 @@ run = ->
   app.get "/api/user/:userId(\\d+)/:lastId(\\d+)", (req, res, next) ->
     twitter.getTimeline "user",
       user_id: req.params.userId
-      count: 500
+      count: 400
       max_id: req.params.lastId if req.params.lastId isnt 0
     , accessToken, accessTokenSecret, (err, res2, body) ->
         return next err if err
