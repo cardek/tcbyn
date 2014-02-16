@@ -83,7 +83,7 @@ run = ->
   app.get "/api/user/:userId(\\d+)", (req, res, next) ->
     twitter.getTimeline "user",
       user_id: req.params.userId
-      count: 100
+      count: 250
     , accessToken, accessTokenSecret, (err, res2, body) ->
         return next err if err
         return next body.error if body and body.error

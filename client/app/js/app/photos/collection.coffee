@@ -59,6 +59,7 @@ class app.photos.Collection extends este.Collection
             item.set 'network','type-insta'
             item.set 'media', url.expanded_url + 'media/'
           if goog.string.contains url.expanded_url, "pic.twitter"
+            console.log "twitter"
             interesting = true
             item.set 'network','type-twitter'
             item.set 'media', url.expanded_url

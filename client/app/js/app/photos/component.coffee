@@ -20,45 +20,10 @@ class app.photos.Component extends este.ui.Component
   constructor: (@storage) ->
     super()
     
-    @photos = new app.photos.Collection 482357921 #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack
-    
+    @photos = new app.photos.Collection 20913964 #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack #18661601
     
     # remove if slider is implemented
     @user = 'gender': 'girls'
-#    @photos = [
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/01.jpg'
-#    ,
-#      'networkClass': 'type-insta'
-#      'src': '/client/app/img/02.jpg'
-#    ,
-#      'networkClass': 'type-insta'
-#      'src': '/client/app/img/03.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/04.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/05.jpg'
-#    ,
-#      'networkClass': 'type-insta'
-#      'src': '/client/app/img/03.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/04.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/05.jpg'
-#    ,
-#      'networkClass': 'type-insta'
-#      'src': '/client/app/img/03.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/04.jpg'
-#    ,
-#      'networkClass': 'type-vine'
-#      'src': '/client/app/img/05.jpg'
-#    ]
 
   ###*
     @type {Object}
@@ -97,7 +62,7 @@ class app.photos.Component extends este.ui.Component
   ###
   enterDocument: ->
     super()
-    @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
+    @on '.detail-btn', goog.events.EventType.CLICK, @bindModel @onDetailClick
     @on '.close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
@@ -137,10 +102,8 @@ class app.photos.Component extends este.ui.Component
   ###*
     @protected
   ###
-  onDetailClick: (e) ->
-    @detail =
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/02.jpg'
+  onDetailClick: (model) ->
+    @detail = model
     @update()
     @detailPicResize()
 

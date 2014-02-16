@@ -9,7 +9,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
 
   render: ->
     @section [
-      console.log @props['photos']
       @ul 'className': 'list', [
         @renderPhoto photo for photo in @props['photos'].toArray()
       ]
@@ -23,10 +22,13 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderPhoto: (photo) ->
-    @li [
+    @li
+      'data-e-model-cid': photo.get '_cid'
+    , [
       @article [
         @a
           'className': "detail-btn #{photo.get 'network'}"
+          
         , [
           @span 'className': 'view', [
             @i 'VIEW'
@@ -90,16 +92,17 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderDetail: (photo) ->
+    console.log photo
     @div 'className': 'lightbox detail-lightbox act', [
       @a
         'className': 'btn-listing prev'
-      @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
+      @div 'className': "in-detail-lightbox #{photo.get 'network'}", [
         @a
           'className': 'close'
         , 'CLOSE'
         @div 'className': 'img', [
           @i 'className': 'border'
-          @img 'src': '/client/app/img/detail.jpg'
+          @img 'src': photo.get 'media'
         ]
         @div 'className': 'desc', [
           @a
