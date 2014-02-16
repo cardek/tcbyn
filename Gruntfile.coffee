@@ -266,7 +266,7 @@ module.exports = (grunt) ->
       "coffee2closure:#{app}"
       "esteTemplates:#{app}"
       "esteDeps"
-      #"esteUnitTests:#{app}"
+#      "esteUnitTests:#{app}"
     ]
     if grunt.option 'stage'
       tasks = tasks.concat [

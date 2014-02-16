@@ -12,7 +12,7 @@ exports.server =
   port: port
   apiKey: 'put-guid-here'
   url: if exports.env.development
-    "http://localhost:#{port}/"
+    "http://node.admin.vag.ccl/"
   else
     "http://#{process.env.SUBDOMAIN}.jit.su/"
 

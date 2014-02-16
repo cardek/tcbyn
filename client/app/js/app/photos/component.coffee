@@ -9,6 +9,8 @@ goog.require 'goog.events.EventType'
 goog.require 'sms.events.InfinitePageScrollHandler'
 goog.require 'goog.events.KeyCodes'
 
+goog.require 'app.photos.Collection'
+
 class app.photos.Component extends este.ui.Component
 
   ###*
@@ -19,43 +21,10 @@ class app.photos.Component extends este.ui.Component
   constructor: (@storage) ->
     super()
 
+    @photos = new app.photos.Collection 418283667, 526969411652558850  #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack #18661601
     @filter =
       'videos': yes
       'photos': yes
-    @photos = [
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/01.jpg'
-    ,
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/02.jpg'
-    ,
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/03.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/04.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/05.jpg'
-    ,
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/03.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/04.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/05.jpg'
-    ,
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/03.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/04.jpg'
-    ,
-      'networkClass': 'type-vine'
-      'src': '/client/app/img/05.jpg'
-    ]
 
   ###*
     @type {Object}
@@ -81,7 +50,13 @@ class app.photos.Component extends este.ui.Component
   createDom: ->
     super()
     @getElement().className = 'photos-viewer'
+    @isLoading = yes
     @update()
+    result = @storage.query @photos
+    goog.result.waitOnSuccess result, (e) =>
+      @isLoading = no
+#      console.log @photos.lastLoadedId()
+      @update()
 
     @scrollHandler = new sms.events.InfinitePageScrollHandler goog.bind @onScrollLoad, @
     @scrollHandler.threshold = 100
@@ -92,10 +67,11 @@ class app.photos.Component extends este.ui.Component
   ###
   enterDocument: ->
     super()
-    @on '.detail-btn', goog.events.EventType.CLICK, @onDetailClick
+    @on '.detail-btn', goog.events.EventType.CLICK, @bindModel @onDetailClick
     @on '#detail-close', goog.events.EventType.CLICK, @onCloseClick
     @on '.fake', goog.events.EventType.CLICK, @onFakeClick
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
+    @on @photos, este.Model.EventType.UPDATE, @onCollectionUpdate
     @on '.start-switcher-0', goog.events.EventType.CLICK, @onBoysClick
     @on '.start-switcher-2', goog.events.EventType.CLICK, @onGirlsClick
     @on '.btn-filter', goog.events.EventType.CLICK, @onBtnFilterClick
@@ -188,6 +164,13 @@ class app.photos.Component extends este.ui.Component
       @update()
     , 200
 
+  ###
+    On collection update callback function
+    @protected
+  ###
+  onCollectionUpdate: ->
+    @update()
+
   ###*
     @override
   ###
@@ -211,10 +194,8 @@ class app.photos.Component extends este.ui.Component
   ###*
     @protected
   ###
-  onDetailClick: (e) ->
-    @detail =
-      'networkClass': 'type-insta'
-      'src': '/client/app/img/02.jpg'
+  onDetailClick: (model) ->
+    @detail = model
     @update()
     @detailPicResize()
 
@@ -263,6 +244,7 @@ class app.photos.Component extends este.ui.Component
     @protected
   ###
   onScrollLoad: (restart) ->
+    console.log "t"
     unless @endOfPage
       @isLoading = yes
       @update()

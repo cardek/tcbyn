@@ -12,7 +12,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @renderHeader()
       @section [
         @ul 'className': 'list', [
-          @renderPhoto photo for photo in @props['photos']
+          @renderPhoto photo for photo in @props['photos'].toArray()
         ]
         if @props['isLoading']
           @div 'className': 'loading', @img
@@ -118,15 +118,18 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderPhoto: (photo) ->
-    @li [
+    @li
+      'data-e-model-cid': photo.get '_cid'
+    , [
       @article [
         @a
-          'className': "detail-btn #{photo['networkClass']}"
+          'className': "detail-btn #{photo.get 'network'}"
+          
         , [
           @span 'className': 'view', [
             @i 'VIEW'
           ]
-          @img 'src': photo['src']
+          @img 'src': photo.get 'media'
         ]
         @div 'className': 'more', [
           @a
@@ -190,17 +193,18 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderDetail: (photo) ->
+    console.log photo
     @div 'className': 'lightbox detail-lightbox act', [
       @a
         'className': 'btn-listing prev'
-      @div 'className': "in-detail-lightbox #{photo['networkClass']}", [
+      @div 'className': "in-detail-lightbox #{photo.get 'network'}", [
         @a
           'className': 'close'
           'id': 'detail-close'
         , 'CLOSE'
         @div 'className': 'img', [
           @i 'className': 'border'
-          @img 'src': '/client/app/img/detail.jpg'
+          @img 'src': photo.get 'media'
         ]
         @div 'className': 'desc', [
           @a
