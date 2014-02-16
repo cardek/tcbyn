@@ -80,10 +80,11 @@ run = ->
 
   app.get '/', routes.index
 
-  app.get "/api/user/:userId(\\d+)", (req, res, next) ->
+  app.get "/api/user/:userId(\\d+)/:lastId(\\d+)", (req, res, next) ->
     twitter.getTimeline "user",
       user_id: req.params.userId
-      count: 250
+      count: 500
+      max_id: req.params.lastId if req.params.lastId isnt 0
     , accessToken, accessTokenSecret, (err, res2, body) ->
         return next err if err
         return next body.error if body and body.error

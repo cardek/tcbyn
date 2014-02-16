@@ -21,7 +21,7 @@ class app.photos.Component extends este.ui.Component
   constructor: (@storage) ->
     super()
     
-    @photos = new app.photos.Collection 20913964 #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack #18661601
+    @photos = new app.photos.Collection 418283667, 526969411652558850  #482357921 alcie #418283667 vix #agr 601244563 # 20913964 - christy mack #18661601
     @filter =
       'videos': yes
       'photos': yes
@@ -50,9 +50,13 @@ class app.photos.Component extends este.ui.Component
   createDom: ->
     super()
     @getElement().className = 'photos-viewer'
+    @isLoading = yes
     @update()
-    
-    @storage.query @photos
+    result = @storage.query @photos
+    goog.result.waitOnSuccess result, (e) =>
+      @isLoading = no
+#      console.log @photos.lastLoadedId()
+      @update()
 
     @scrollHandler = new sms.events.InfinitePageScrollHandler goog.bind @onScrollLoad, @
     @scrollHandler.threshold = 100
@@ -224,6 +228,7 @@ class app.photos.Component extends este.ui.Component
     @protected
   ###
   onScrollLoad: (restart) ->
+    console.log "t"
     unless @endOfPage
       @isLoading = yes
       @update()

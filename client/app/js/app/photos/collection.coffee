@@ -14,7 +14,7 @@ class app.photos.Collection extends este.Collection
     @constructor
     @extends {este.Collection}
   ###
-  constructor: (@user_id, array) ->
+  constructor: (@user_id, @max_id, array) ->
     @model = app.photos.Model
     super array
 
@@ -22,6 +22,11 @@ class app.photos.Collection extends este.Collection
     @type {Number}
   ###
   user_id: null
+
+  ###*
+    @type {Number}
+  ###
+  max_id: 0
 
   ###*
     @override
@@ -37,8 +42,14 @@ class app.photos.Collection extends este.Collection
     @override
   ###
   getUrl: ->
-    "/user/#{@user_id}"
+    "/user/#{@user_id}/#{@max_id}"
 
+  ###*
+    @override
+  ###
+  lastLoadedId: ->
+    model = @at @getLength() - 1
+    model?.id - 1
 
   ###*
     @param {Array.<Object|este.Model>|Object|este.Model} arg
@@ -58,19 +69,21 @@ class app.photos.Collection extends este.Collection
             interesting = true
             item.set 'network','type-insta'
             item.set 'media', url.expanded_url + 'media/'
-          if goog.string.contains url.expanded_url, "pic.twitter"
-            console.log "twitter"
-            interesting = true
-            item.set 'network','type-twitter'
-            item.set 'media', url.expanded_url
-          if goog.string.contains url.expanded_url, "vine.co"
-            interesting = true
-            item.set 'network','type-vine'
-            item.set 'media', url.expanded_url
-      if interesting is true
+#          if goog.string.contains url.expanded_url, "pic.twitter"
+#            console.log "twitter"
+#            interesting = true
+#            item.set 'network','type-twitter'
+#            item.set 'media', url.expanded_url
+#          if goog.string.contains url.expanded_url, "vine.co"
+#            interesting = true
+#            item.set 'network','type-vine'
+#            item.set 'media', url.expanded_url
+      if interesting is true and added.length < 8
         @ensureUnique item
         item.addParent @ if item instanceof este.Base
         added.push item
+        @max_id = @lastLoadedId()
+        
     return false if !added.length
     @array.push.apply @array, added
     @sortInternal()
