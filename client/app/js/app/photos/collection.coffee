@@ -69,6 +69,7 @@ class app.photos.Collection extends este.Collection
             interesting = true
             item.set 'network','type-insta'
             item.set 'media', url.expanded_url + 'media/'
+            @max_id = item.id
 #          if goog.string.contains url.expanded_url, "pic.twitter"
 #            console.log "twitter"
 #            interesting = true
@@ -82,7 +83,6 @@ class app.photos.Collection extends este.Collection
         @ensureUnique item
         item.addParent @ if item instanceof este.Base
         added.push item
-        @max_id = @lastLoadedId()
         
     return false if !added.length
     @array.push.apply @array, added

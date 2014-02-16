@@ -50,16 +50,16 @@ class app.photos.Component extends este.ui.Component
   createDom: ->
     super()
     @getElement().className = 'photos-viewer'
+    @scrollHandler = new sms.events.InfinitePageScrollHandler goog.bind @onScrollLoad, @
+    @scrollHandler.threshold = 100
     @isLoading = yes
     @update()
     result = @storage.query @photos
     goog.result.waitOnSuccess result, (e) =>
       @isLoading = no
-#      console.log @photos.lastLoadedId()
+      @scrollHandler.setEnabled on
       @update()
 
-    @scrollHandler = new sms.events.InfinitePageScrollHandler goog.bind @onScrollLoad, @
-    @scrollHandler.threshold = 100
     return
 
   ###*
@@ -83,8 +83,6 @@ class app.photos.Component extends este.ui.Component
     @on '.filter-switcher-2', goog.events.EventType.CLICK, @onFilterGirlsClick
 
     @on @, goog.events.KeyCodes.ENTER, @onEscClick
-
-    @scrollHandler.setEnabled on
     return
 
   ###*
@@ -254,17 +252,39 @@ class app.photos.Component extends este.ui.Component
     @protected
   ###
   onScrollLoad: (restart) ->
-    console.log "t"
+#    unless @endOfPage
+#      @isLoading = yes
+#      @update()
+#      
+#      max_id = @photos.lastLoadedId()
+#      
+#      result = @storage.query @photos, max_id
+#      goog.result.waitOnSuccess result, (e) =>
+#        @isLoading = no
+#  #      console.log @photos.lastLoadedId()
+#        @update()
+#      
+#      setTimeout =>
+#        cloned = goog.array.clone @photos
+#        @photos = goog.array.concat cloned, @photos
+#        @isLoading = no
+#        @update()
+#        restart()
+#      , 1500
+#    else
+#      restart()
+      
     unless @endOfPage
       @isLoading = yes
       @update()
-      setTimeout =>
-        cloned = goog.array.clone @photos
-        @photos = goog.array.concat cloned, @photos
+      promise = goog.labs.net.xhr.getJson @storage.namespace + "/user/#{@photos.user_id}/#{@photos.max_id}"
+      result = goog.result.SimpleResult.fromPromise promise
+      goog.result.transform result, (items) =>
+        console.log items
+        @photos.add items
         @isLoading = no
         @update()
         restart()
-      , 1500
     else
       restart()
 

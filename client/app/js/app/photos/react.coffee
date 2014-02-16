@@ -12,7 +12,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @renderHeader()
       @section [
         @ul 'className': 'list', [
-          @renderPhoto photo for photo in @props['photos'].toArray()
+          @renderPhoto photo for photo in @props['photos']?.toArray()
         ]
         if @props['isLoading']
           @div 'className': 'loading', @img
