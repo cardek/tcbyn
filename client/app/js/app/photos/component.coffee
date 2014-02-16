@@ -69,8 +69,8 @@ class app.photos.Component extends este.ui.Component
     super()
     @on '.detail-btn', goog.events.EventType.CLICK, @bindModel @onDetailClick
     @on '#detail-close', goog.events.EventType.CLICK, @onCloseClick
-    @on '.fake', goog.events.EventType.CLICK, @onFakeClick
-    @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
+    @on '.fake', goog.events.EventType.CLICK, @bindModel @onFakeClick
+    @on '.wrong-category', goog.events.EventType.CLICK, @bindModel @onWrongCategoryClick
     @on @photos, este.Model.EventType.UPDATE, @onCollectionUpdate
     @on '.start-switcher-0', goog.events.EventType.CLICK, @onBoysClick
     @on '.start-switcher-2', goog.events.EventType.CLICK, @onGirlsClick
@@ -182,13 +182,23 @@ class app.photos.Component extends este.ui.Component
   ###*
     @protected
   ###
-  onWrongCategoryClick: (e) ->
+  onWrongCategoryClick: (model, el) ->
+    goog.dom.classes.enable el, 'fadeout', yes
+    setTimeout =>
+      @photos.remove model
+      @dom_.removeNode el
+    , 400
     @thanksForVote()
 
   ###*
     @protected
   ###
-  onFakeClick: (e) ->
+  onFakeClick: (model, el) ->
+    goog.dom.classes.enable el, 'fadeout', yes
+    setTimeout =>
+      @photos.remove model
+      @dom_.removeNode el
+    , 400
     @thanksForVote()
 
   ###*
@@ -206,7 +216,7 @@ class app.photos.Component extends este.ui.Component
 
     size = goog.style.getSize lightbox
     goog.style.setStyle img, 'width', size.width + 'px'
-    w = size.width - (size.height + 30)
+    w = size.width - (size.height)
     goog.style.setStyle desc, 'width', w + 'px'
 
   ###*
@@ -260,7 +270,7 @@ class app.photos.Component extends este.ui.Component
 
   thanksForVote: ->
     el = @dom_.getElement 'notification-container'
-    @dom_.setTextContent el, 'Thanks for your vote!'
+    @dom_.setTextContent el, 'Thx for vote...'
     goog.dom.classes.enable el, 'act', yes
     setTimeout ->
       goog.dom.classes.enable el, 'act', no

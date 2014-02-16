@@ -124,7 +124,7 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
       @article [
         @a
           'className': "detail-btn #{photo.get 'network'}"
-          
+
         , [
           @span 'className': 'view', [
             @i 'VIEW'
@@ -193,7 +193,6 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
     ]
 
   renderDetail: (photo) ->
-    console.log photo
     @div 'className': 'lightbox detail-lightbox act', [
       @a
         'className': 'btn-listing prev'
@@ -205,6 +204,10 @@ app.photos.react = este.react.create (`/** @lends {React.ReactComponent.prototyp
         @div 'className': 'img', [
           @i 'className': 'border'
           @img 'src': photo.get 'media'
+          @div 'className': 'more', [
+            @a 'className': 'fake', @i ''
+            @a 'className': 'wrong-category', @i ''
+          ]
         ]
         @div 'className': 'desc', [
           @a
