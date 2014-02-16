@@ -19,6 +19,9 @@ class app.photos.Component extends este.ui.Component
   constructor: (@storage) ->
     super()
 
+    @filter =
+      'videos': yes
+      'photos': yes
     @photos = [
       'networkClass': 'type-vine'
       'src': '/client/app/img/01.jpg'
@@ -95,10 +98,65 @@ class app.photos.Component extends este.ui.Component
     @on '.wrong-category', goog.events.EventType.CLICK, @onWrongCategoryClick
     @on '.switcher-0', goog.events.EventType.CLICK, @onBoysClick
     @on '.switcher-2', goog.events.EventType.CLICK, @onGirlsClick
+    @on '.btn-filter', goog.events.EventType.CLICK, @onBtnFilterClick
+    @on 'button', goog.events.EventType.CLICK, @onFilterSubmit
+    @on '.checkbox-photos', goog.events.EventType.CLICK, @onCheckboxPhotosClick
+    @on '.checkbox-videos', goog.events.EventType.CLICK, @onCheckboxVideosClick
+    @on '#filter-close', goog.events.EventType.CLICK, @onFilterCloseClick
+    @on '.filter-switcher-0', goog.events.EventType.CLICK, @onFilterBoysClick
+    @on '.filter-switcher-2', goog.events.EventType.CLICK, @onFilterGirlsClick
+
     @on @, goog.events.KeyCodes.ENTER, @onEscClick
 
     @scrollHandler.setEnabled on
     return
+
+  ###*
+    @protected
+  ###
+  onFilterBoysClick: ->
+    @user['gender'] = 'boys'
+
+  ###*
+    @protected
+  ###
+  onFilterBoysClick: ->
+    @user['gender'] = 'girls'
+
+  ###*
+    @protected
+  ###
+  onFilterCloseClick: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.enable filter, 'act', no
+
+  ###*
+    @protected
+  ###
+  onCheckboxPhotosClick: ->
+    @filter['photos'] = not @filter['photos']
+    @update()
+
+  ###*
+    @protected
+  ###
+  onCheckboxVideosClick: ->
+    @filter['videos'] = not @filter['videos']
+    @update()
+
+  ###*
+    @protected
+  ###
+  onFilterSubmit: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.enable filter, 'act', no
+
+  ###*
+    @protected
+  ###
+  onBtnFilterClick: ->
+    filter = @dom_.getElementByClass 'filter', @getElement()
+    goog.dom.classes.toggle filter, 'act'
 
   ###*
     @protected
@@ -174,6 +232,7 @@ class app.photos.Component extends este.ui.Component
   ###
   update: ->
     props =
+      'filter': @filter
       'isLoading': @isLoading
       'detail': @detail
       'user': @user
